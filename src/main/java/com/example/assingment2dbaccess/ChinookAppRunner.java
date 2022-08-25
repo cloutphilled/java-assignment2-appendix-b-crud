@@ -37,13 +37,18 @@ public class ChinookAppRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         //chinookDAO.test();
-
-        //chinookDAO.getAllCustomers().forEach(System.out::println);
-        //System.out.println(Arrays.toString(chinookDAO.getAllCustomers().toArray()));
+        //System.out.println(Arrays.toString(customerRepository.findAll().toArray()));
         //chinookDAO.getAllActors();
         //customerRepository.findAll();
 
-        customerRepository.test();
+        //Requirement one
+        //customerRepository.findAll().forEach(System.out::println);
+
+        //Requirement two
+        //customerRepository.findById(1).forEach(System.out::println);
+
+
+
 
     }
 }

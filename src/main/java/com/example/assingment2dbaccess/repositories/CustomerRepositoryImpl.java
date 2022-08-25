@@ -4,9 +4,8 @@ import com.example.assingment2dbaccess.models.Customer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -31,7 +30,30 @@ public class CustomerRepositoryImpl implements CustomerRepository{
      */
     @Override
     public List<Customer> findAll() {
-        return null;
+        String sql = "SELECT * FROM customer";
+        List<Customer> customers = new ArrayList<>();
+        try(Connection conn = DriverManager.getConnection(url, username,password)) {
+            // Write statement
+            PreparedStatement statement = conn.prepareStatement(sql);
+            // Execute statement
+            ResultSet result = statement.executeQuery();
+            // Handle result
+            while(result.next()) {
+                Customer student = new Customer(
+                        result.getInt("customer_id"),
+                        result.getString("first_name"),
+                        result.getString("last_name"),
+                        result.getString("country"),
+                        result.getString("postal_code"),
+                        result.getString("phone"),
+                        result.getString("email")
+                );
+                customers.add(student);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customers;
     }
 
     /**
@@ -40,6 +62,17 @@ public class CustomerRepositoryImpl implements CustomerRepository{
      */
     @Override
     public Customer findById(Integer id) {
+        //Customer aCustomer = new Customer();
+        String sql = "SELECT * FROM customer WHERE customer_id = ?";
+        try(Connection conn = DriverManager.getConnection(url, username,password)) {
+            // Write statement
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+            // Execute statement
+            ResultSet result = statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -91,4 +124,6 @@ public class CustomerRepositoryImpl implements CustomerRepository{
         }
 
     }
+
+
 }
