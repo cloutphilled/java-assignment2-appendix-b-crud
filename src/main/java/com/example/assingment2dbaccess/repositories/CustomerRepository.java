@@ -15,7 +15,9 @@ public interface CustomerRepository extends CRUDRepository<Customer, Integer> {
     List<Customer> findACustomerById(Integer id); // A method that finds customer by id. Takes an Integer as parameter..
 
 
-    List<Customer> findACustomerByName(String name); //A method that finds a customer by name. Takes a string name as parameter
+    Customer findACustomerByName(String name); //A method that finds a customer by name. Takes a string name as parameter
+
+    List<Customer> sortCustomerByLastName(Integer id);
 
     void test(); //A method that tests the connection to the db and prints it out if it succeeds.
 

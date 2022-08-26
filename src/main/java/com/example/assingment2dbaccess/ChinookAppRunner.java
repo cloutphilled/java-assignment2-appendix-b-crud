@@ -43,31 +43,33 @@ public class ChinookAppRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 
         //Requirement one is instantiated here
-        //customerRepository.findAll().forEach(System.out::println);
+        customerRepository.findAll().forEach(System.out::println);
 
         //Requirement two is instantiated here
-        //customerRepository.findACustomerById(1).forEach(System.out::println);
+        customerRepository.findACustomerById(1).forEach(System.out::println);
 
-        //Requirement three is instantiated here
+        //Requirement three is instantiated here (does not work)
+
 
         //Requirement four is instantiated here
+        customerRepository.sortCustomerByLastName(4);
 
-        //Requirement five
-        /*customerRepository.insert(new Customer(60,
-                "John",
+        //Requirement five is instantiated here. The below test has not been added to DB yet.
+        /*customerRepository.insert(new Customer(61,
+                "Svend",
                 "Svendsen",
                 "Denmark",
                 "4000",
-                "+45 12 34 56 78",
-                "john@svendsen.dk"));*/
+                "+45 12 34 56 71",
+                "svend@svendsen.dk"));*/
 
         //Requirement six is instantiated here
 
-        //Requirement seven is instantiated here
+        //Requirement seven could not figure it out
 
-        //Requirement eight is instantiated here
+        //Requirement eight could not figure it out
 
-        //Requirement nine is instantiated here
+        //Requirement nine could not figure it out
 
 
 

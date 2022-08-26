@@ -123,21 +123,75 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 
     /**
      * A method that should finds a customer by a name. (DOES NOT WORK)
+     *
      * @param name
      * @return
      */
     @Override
-    public List<Customer> findACustomerByName(String name) {
-        String sql = "SELECT * FROM customer WHERE first_name LIKE 'L%' = ?";
-        List<Customer> customers = new ArrayList<>();
-        try(Connection conn = DriverManager.getConnection(url, username,password)) {
-            // Write statement
-            PreparedStatement statement = conn.prepareStatement(sql);
-            //statement.setCursorName(?);
-            // Execute statement
+    public Customer findACustomerByName(String name) {
+        Customer customer = null;
+        try(Connection connection = DriverManager.getConnection(url,username,password)){
+            String sql = "SELECT customer_id, first_name, last_name, country, postal_code, phone, email FROM "
+                    + "customer WHERE first_name = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, customer.first_name());
             ResultSet result = statement.executeQuery();
-            // Handle result
-            while (result.next()) {
+            while(result.next()){
+                customer = new Customer(
+                        result.getInt("customer_id"),
+                        result.getString("first_name"),
+                        result.getString("last_name"),
+                        result.getString("country"),
+                        result.getString("postal_code"),
+                        result.getString("phone"),
+                        result.getString("email"));
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return customer;
+
+    }
+
+    /**
+     * This method inserts a new customer into the tabel customer.
+     * @param customer
+     * @return
+     */
+    @Override
+    public int insert(Customer customer) {
+        String sql = "INSERT INTO customer(customer_id,first_name,last_name,country,postal_code,phone,email) VALUES (?,?,?,?,?,?,?)";
+        int result = 0;
+        try(Connection connection = DriverManager.getConnection(url,username,password)){
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,customer.id());
+            statement.setString(2,customer.first_name());
+            statement.setString(3,customer.last_name());
+            statement.setString(4,customer.country());
+            statement.setString(5,customer.postal_code());
+            statement.setString(6,customer.phone());
+            statement.setString(7,customer.email());
+            result = statement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
+    /**
+     * A method that finds a customer by a tables primary key id.
+     * @param id
+     * @return a list of type customer
+     */
+    @Override
+    public List<Customer> sortCustomerByLastName(Integer id) {
+        String sql = "SELECT * FROM customer ORDER BY last_name LIMIT 10 OFFSET 5;";
+        List<Customer>customers = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url,username,password)) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            while (result.next()){
                 Customer customer = new Customer(
                         result.getInt("customer_id"),
                         result.getString("first_name"),
@@ -148,39 +202,13 @@ public class CustomerRepositoryImpl implements CustomerRepository{
                         result.getString("email")
                 );
                 customers.add(customer);
+                System.out.println(customer);
             }
-
-        } catch (SQLException e) {
+        } catch(SQLException e){
             e.printStackTrace();
         }
         return customers;
-    }
 
-    /**
-     * This method inserts a new customer into the tabel customer. (DOES NOT WORK)
-     * @param customer
-     * @return
-     */
-    @Override
-    public int insert(Customer customer) {
-        String sql = "INSERT INTO customer VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-        int result = 0;
-        try(Connection conn = DriverManager.getConnection(url, username,password)) {
-            // Write statement
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, customer.id());
-            statement.setString(2,customer.first_name());
-            statement.setString(3,customer.last_name());
-            statement.setString(8,customer.country());
-            statement.setString(9,customer.postal_code());
-            statement.setString(10,customer.phone());
-            statement.setString(12,customer.email());
-            // Execute statement
-            result = statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
     }
 
     /**
