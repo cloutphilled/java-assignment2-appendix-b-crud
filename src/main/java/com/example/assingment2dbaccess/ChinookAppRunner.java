@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 /**
+ * The application runner which implements the ApplicationRunner.
+ * It is used to indicate that a bean should run when it is contained
+ * within a SpringApplication.
+ *
+ * @Component: it is used to instantiate configuration- and classpath scanning
  *
  * @Author Peter Hansen, Christian Casper Hofma, Phillip Friis Petersen (Order after surname)
  */
@@ -15,22 +20,16 @@ import java.util.Arrays;
 @Component
 public class ChinookAppRunner implements ApplicationRunner {
 
-    /*private final ChinookDAO chinookDAO;
+    private final CustomerRepository customerRepository; //The CustomerRepository is instantiated here.
 
-
-    @Autowired
-    public ChinookAppRunner(ChinookDAO chinookDAO){
-        this.chinookDAO = chinookDAO;
-
-
-    }*/
-
-    private final CustomerRepository customerRepository;
-
+    /**
+     * The constructor takes the customerRepository as a parameter and initializes it.
+     * @param customerRepository
+     */
     @Autowired
     public ChinookAppRunner(CustomerRepository customerRepository){
 
-        this.customerRepository = customerRepository;
+        this.customerRepository = customerRepository; //saves the parameter to the final variable.
 
     }
 
@@ -41,14 +40,12 @@ public class ChinookAppRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         //chinookDAO.test();
-        //System.out.println(Arrays.toString(customerRepository.findAll().toArray()));
-        //chinookDAO.getAllActors();
-        //customerRepository.findAll();
 
-        //Requirement one
+
+        //Requirement one is instantiated here
         //customerRepository.findAll().forEach(System.out::println);
 
-        //Requirement two
+        //Requirement two is instantiated here
         customerRepository.findACustomerById(1).forEach(System.out::println);
 
         //Requirement three
