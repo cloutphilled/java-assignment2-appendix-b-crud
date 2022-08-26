@@ -11,13 +11,13 @@ import java.util.List;
 
 public interface CustomerRepository extends CRUDRepository<Customer, Integer> {
 
-    // A method that finds customer by id
-    List<Customer> findACustomerById(Integer id);
 
-    //A method that finds a customer by name
-    List<Customer> findACustomerByName(String name);
+    List<Customer> findACustomerById(Integer id); // A method that finds customer by id. Takes an Integer as parameter..
 
-    void test();
+
+    List<Customer> findACustomerByName(String name); //A method that finds a customer by name. Takes a string name as parameter
+
+    void test(); //A method that tests the connection to the db and prints it out if it succeeds.
 
 
 }
