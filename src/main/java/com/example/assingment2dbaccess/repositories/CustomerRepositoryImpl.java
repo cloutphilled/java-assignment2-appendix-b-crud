@@ -8,6 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @Author Peter Hansen, Christian Casper Hofma, Phillip Friis Petersen (Order after surname)
+ */
+
 @Repository
 public class CustomerRepositoryImpl implements CustomerRepository{
 
@@ -39,7 +44,7 @@ public class CustomerRepositoryImpl implements CustomerRepository{
             ResultSet result = statement.executeQuery();
             // Handle result
             while(result.next()) {
-                Customer student = new Customer(
+                Customer customer = new Customer(
                         result.getInt("customer_id"),
                         result.getString("first_name"),
                         result.getString("last_name"),
@@ -48,7 +53,7 @@ public class CustomerRepositoryImpl implements CustomerRepository{
                         result.getString("phone"),
                         result.getString("email")
                 );
-                customers.add(student);
+                customers.add(customer);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,18 +67,75 @@ public class CustomerRepositoryImpl implements CustomerRepository{
      */
     @Override
     public Customer findById(Integer id) {
-        //Customer aCustomer = new Customer();
+        return null;
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Customer> findACustomerById(Integer id) {
         String sql = "SELECT * FROM customer WHERE customer_id = ?";
+        List<Customer> customers = new ArrayList<>();
         try(Connection conn = DriverManager.getConnection(url, username,password)) {
             // Write statement
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, id);
             // Execute statement
             ResultSet result = statement.executeQuery();
+            // Handle result
+            while (result.next()) {
+                Customer customer = new Customer(
+                        result.getInt("customer_id"),
+                        result.getString("first_name"),
+                        result.getString("last_name"),
+                        result.getString("country"),
+                        result.getString("postal_code"),
+                        result.getString("phone"),
+                        result.getString("email")
+                );
+                customers.add(customer);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return customers;
+    }
+
+    /**
+     * @param name
+     * @return
+     */
+    @Override
+    public List<Customer> findACustomerByName(String name) {
+        String sql = "SELECT * FROM customer WHERE first_name LIKE 'L%' = ?";
+        List<Customer> customers = new ArrayList<>();
+        try(Connection conn = DriverManager.getConnection(url, username,password)) {
+            // Write statement
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setCursorName(?);
+            // Execute statement
+            ResultSet result = statement.executeQuery();
+            // Handle result
+            while (result.next()) {
+                Customer customer = new Customer(
+                        result.getInt("customer_id"),
+                        result.getString("first_name"),
+                        result.getString("last_name"),
+                        result.getString("country"),
+                        result.getString("postal_code"),
+                        result.getString("phone"),
+                        result.getString("email")
+                );
+                customers.add(customer);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customers;
     }
 
     /**

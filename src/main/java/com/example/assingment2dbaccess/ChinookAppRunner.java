@@ -5,8 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
 import java.util.Arrays;
+
+/**
+ *
+ * @Author Peter Hansen, Christian Casper Hofma, Phillip Friis Petersen (Order after surname)
+ */
 
 @Component
 public class ChinookAppRunner implements ApplicationRunner {
@@ -45,7 +49,9 @@ public class ChinookAppRunner implements ApplicationRunner {
         //customerRepository.findAll().forEach(System.out::println);
 
         //Requirement two
-        //customerRepository.findById(1).forEach(System.out::println);
+        customerRepository.findACustomerById(1).forEach(System.out::println);
+
+        //Requirement three
 
 
 
