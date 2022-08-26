@@ -16,7 +16,6 @@ import java.util.List;
 @Repository
 public class CustomerRepositoryImpl implements CustomerRepository{
 
-
     private final String url; //A final string that contains the URL to the DB
     private final String username; //A final string that contains the username to the DB
     private final String password; //A final string that contains the password to the DB
@@ -80,16 +79,6 @@ public class CustomerRepositoryImpl implements CustomerRepository{
         }
         //Returns the list of type customer containing the customer-object.
         return customers;
-    }
-
-    /**
-     * Not used....
-     * @param id
-     * @return
-     */
-    @Override
-    public Customer findById(Integer id) {
-        return null;
     }
 
     /**
@@ -167,10 +156,8 @@ public class CustomerRepositoryImpl implements CustomerRepository{
         return customers;
     }
 
-
-
     /**
-     * Not used
+     * This method inserts a new customer into the tabel customer. (DOES NOT WORK)
      * @param customer
      * @return
      */
@@ -195,6 +182,33 @@ public class CustomerRepositoryImpl implements CustomerRepository{
         }
         return result;
     }
+
+    /**
+     * A test method that is used to check if the connection to DB works.
+     */
+    @Override
+    public void test() {
+        //A connection object reference that takes the url, username and password.
+        //It is created with a try catch to catch any errors.
+        try (Connection conn = DriverManager.getConnection(url, username, password);) {
+            System.out.println("Connected to Postgres...");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    /**
+     * Not used....
+     * @param id
+     * @return
+     */
+    @Override
+    public Customer findById(Integer id) {
+        return null;
+    }
+
 
     /**
      * Not used
@@ -224,21 +238,6 @@ public class CustomerRepositoryImpl implements CustomerRepository{
     @Override
     public int deleteById(Integer id) {
         return 0;
-    }
-
-    /**
-     * A test method that is used to check if the connection to DB works.
-     */
-    @Override
-    public void test() {
-        //A connection object reference that takes the url, username and password.
-        //It is created with a try catch to catch any errors.
-        try (Connection conn = DriverManager.getConnection(url, username, password);) {
-            System.out.println("Connected to Postgres...");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
     }
 
 
