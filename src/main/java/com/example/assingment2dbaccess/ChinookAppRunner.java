@@ -1,5 +1,6 @@
 package com.example.assingment2dbaccess;
 
+import com.example.assingment2dbaccess.models.Customer;
 import com.example.assingment2dbaccess.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -34,21 +35,40 @@ public class ChinookAppRunner implements ApplicationRunner {
     }
 
     /**
+     * Here the repository methods are run and printed out to the console.
      * @param args incoming application arguments
      * @throws Exception
      */
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        //chinookDAO.test();
-
 
         //Requirement one is instantiated here
         //customerRepository.findAll().forEach(System.out::println);
 
         //Requirement two is instantiated here
-        customerRepository.findACustomerById(1).forEach(System.out::println);
+        //customerRepository.findACustomerById(1).forEach(System.out::println);
 
-        //Requirement three
+        //Requirement three is instantiated here
+
+        //Requirement four is instantiated here
+
+        //Requirement five
+        /*customerRepository.insert(new Customer(60,
+                "John",
+                "Svendsen",
+                "Denmark",
+                "4000",
+                "+45 12 34 56 78",
+                "john@svendsen.dk"));*/
+
+        //Requirement six is instantiated here
+
+        //Requirement seven is instantiated here
+
+        //Requirement eight is instantiated here
+
+        //Requirement nine is instantiated here
+
 
 
 
